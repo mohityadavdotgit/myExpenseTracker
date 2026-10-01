@@ -1,0 +1,771 @@
+* {
+  box-sizing: border-box;
+}
+
+.app {
+  min-height: 100vh;
+  background: #f6f7fb;
+  color: #1f2937;
+}
+
+/* =========================
+   Header
+========================= */
+
+.header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.subtitle {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.wallet-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+}
+
+.wallet-header > svg {
+  font-size: 25px;
+  color: #16a34a;
+}
+
+.wallet-header span {
+  display: block;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.wallet-header strong {
+  display: block;
+  margin-top: 2px;
+  font-size: 18px;
+  color: #15803d;
+}
+
+/* =========================
+   Main Container
+========================= */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 24px 50px;
+}
+
+/* =========================
+   Wallet
+========================= */
+
+.top-section {
+  margin-bottom: 24px;
+}
+
+.wallet-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 24px;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.wallet-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ecfdf5;
+  color: #16a34a;
+  font-size: 25px;
+}
+
+.wallet-info {
+  flex: 1;
+}
+
+.wallet-info p {
+  margin: 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.wallet-info h2 {
+  margin: 3px 0;
+  font-size: 28px;
+  color: #111827;
+}
+
+.wallet-info span {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* =========================
+   Buttons
+========================= */
+
+.income-button,
+.expense-button,
+.submit-button {
+  border: none;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  border-radius: 9px;
+  padding: 11px 17px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: 0.2s ease;
+}
+
+.income-button {
+  background: #16a34a;
+  color: white;
+}
+
+.income-button:hover {
+  background: #15803d;
+}
+
+.expense-button {
+  background: #4f46e5;
+  color: white;
+}
+
+.expense-button:hover {
+  background: #4338ca;
+}
+
+.submit-button {
+  background: #4f46e5;
+  color: white;
+}
+
+.submit-button:hover {
+  background: #4338ca;
+}
+
+/* =========================
+   Cards
+========================= */
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+
+  margin-bottom: 24px;
+}
+
+.chart-card {
+  min-height: 410px;
+  padding: 22px;
+}
+
+.card-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-heading h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #111827;
+}
+
+.card-heading p {
+  margin: 5px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.chart-container {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* =========================
+   Expense Card
+========================= */
+
+.expense-card {
+  overflow: hidden;
+}
+
+.expense-header {
+  padding: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.expense-header h2 {
+  margin: 0;
+  font-size: 19px;
+}
+
+.expense-header p {
+  margin: 5px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+/* =========================
+   Expense List
+========================= */
+
+.expense-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.expense-item {
+  padding: 18px 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.expense-item:last-child {
+  border-bottom: none;
+}
+
+.expense-item-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.expense-item-icon {
+  width: 44px;
+  height: 44px;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.expense-details {
+  min-width: 0;
+}
+
+.expense-details h3 {
+  margin: 0 0 7px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.expense-meta {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.category-badge {
+  padding: 4px 8px;
+
+  background: #f3f4f6;
+  color: #4b5563;
+
+  border-radius: 6px;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.expense-item-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.expense-price {
+  color: #dc2626;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.expense-actions {
+  display: flex;
+  gap: 7px;
+}
+
+.edit-button,
+.delete-button {
+  width: 34px;
+  height: 34px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+
+  background: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.edit-button {
+  color: #4f46e5;
+}
+
+.edit-button:hover {
+  background: #eef2ff;
+}
+
+.delete-button {
+  color: #dc2626;
+}
+
+.delete-button:hover {
+  background: #fef2f2;
+}
+
+/* =========================
+   Empty State
+========================= */
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-icon {
+  width: 58px;
+  height: 58px;
+
+  margin: 0 auto 14px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f3f4f6;
+  color: #9ca3af;
+
+  font-size: 22px;
+}
+
+.empty-state h3 {
+  margin: 0 0 7px;
+  font-size: 17px;
+}
+
+.empty-state p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* =========================
+   No Chart Data
+========================= */
+
+.no-chart-data {
+  height: 300px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  color: #9ca3af;
+  text-align: center;
+}
+
+.no-chart-data p {
+  margin: 0 0 6px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.no-chart-data span {
+  font-size: 13px;
+}
+
+/* =========================
+   Modal
+========================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: 1000;
+
+  background: rgba(17, 24, 39, 0.55);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+}
+
+.modal {
+  width: 100%;
+  max-width: 460px;
+
+  max-height: 90vh;
+  overflow-y: auto;
+
+  background: white;
+
+  border-radius: 16px;
+
+  padding: 24px;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+
+  animation: modalIn 0.2s ease;
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  margin-bottom: 24px;
+}
+
+.modal-header > div:first-child {
+  position: relative;
+  padding-left: 48px;
+}
+
+.modal-icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 38px;
+  height: 38px;
+
+  border-radius: 9px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #111827;
+}
+
+.modal-header p {
+  margin: 5px 0 0;
+
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.close-button {
+  width: 34px;
+  height: 34px;
+
+  border: none;
+  background: transparent;
+
+  color: #6b7280;
+
+  border-radius: 7px;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+/* =========================
+   Forms
+========================= */
+
+.form-group {
+  margin-bottom: 17px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color: #374151;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+
+  height: 44px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  padding: 0 12px;
+
+  font-size: 14px;
+
+  background: white;
+
+  outline: none;
+
+  transition: 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #6366f1;
+
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 24px;
+}
+
+.cancel-button {
+  border: 1px solid #d1d5db;
+
+  background: white;
+
+  color: #374151;
+
+  border-radius: 8px;
+
+  padding: 10px 17px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.cancel-button:hover {
+  background: #f9fafb;
+}
+
+/* =========================
+   Tablet
+========================= */
+
+@media (max-width: 900px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-card {
+    min-height: 380px;
+  }
+}
+
+/* =========================
+   Mobile
+========================= */
+
+@media (max-width: 600px) {
+  .header-content {
+    padding: 18px 16px;
+
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .header h1 {
+    font-size: 25px;
+  }
+
+  .wallet-header {
+    width: 100%;
+  }
+
+  .container {
+    padding: 18px 14px 35px;
+  }
+
+  .wallet-card {
+    padding: 18px;
+
+    align-items: flex-start;
+
+    flex-wrap: wrap;
+  }
+
+  .wallet-info {
+    min-width: 150px;
+  }
+
+  .wallet-info h2 {
+    font-size: 24px;
+  }
+
+  .income-button {
+    width: 100%;
+  }
+
+  .charts-grid {
+    gap: 16px;
+  }
+
+  .chart-card {
+    padding: 16px;
+    min-height: 350px;
+  }
+
+  .expense-header {
+    padding: 17px;
+
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 14px;
+  }
+
+  .expense-button {
+    width: 100%;
+  }
+
+  .expense-item {
+    padding: 16px;
+
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .expense-item-right {
+    width: 100%;
+
+    justify-content: space-between;
+  }
+
+  .expense-details h3 {
+    max-width: 180px;
+  }
+
+  .modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .modal {
+    max-width: none;
+
+    max-height: 92vh;
+
+    border-radius: 18px 18px 0 0;
+
+    padding: 20px;
+  }
+}
