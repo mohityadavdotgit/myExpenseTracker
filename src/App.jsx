@@ -112,14 +112,9 @@ function App() {
       date: expenseData.date,
     };
 
-    setExpenses((previousExpenses) => [
-      ...previousExpenses,
-      newExpense,
-    ]);
+    setExpenses((previousExpenses) => [...previousExpenses, newExpense]);
 
-    setWalletBalance(
-      (previousBalance) => previousBalance - price
-    );
+    setWalletBalance((previousBalance) => previousBalance - price);
 
     enqueueSnackbar("Expense added successfully", {
       variant: "success",
@@ -182,13 +177,11 @@ function App() {
               category: updatedExpense.category,
               date: updatedExpense.date,
             }
-          : expense
-      )
+          : expense,
+      ),
     );
 
-    setWalletBalance(
-      (previousBalance) => previousBalance - priceDifference
-    );
+    setWalletBalance((previousBalance) => previousBalance - priceDifference);
 
     enqueueSnackbar("Expense updated successfully", {
       variant: "success",
@@ -203,21 +196,18 @@ function App() {
   // Delete Expense
   // -----------------------------
   const handleDeleteExpense = (id) => {
-    const expenseToDelete = expenses.find(
-      (expense) => expense.id === id
-    );
+    const expenseToDelete = expenses.find((expense) => expense.id === id);
 
     if (!expenseToDelete) {
       return;
     }
 
     setExpenses((previousExpenses) =>
-      previousExpenses.filter((expense) => expense.id !== id)
+      previousExpenses.filter((expense) => expense.id !== id),
     );
 
     setWalletBalance(
-      (previousBalance) =>
-        previousBalance + Number(expenseToDelete.price)
+      (previousBalance) => previousBalance + Number(expenseToDelete.price),
     );
 
     enqueueSnackbar("Expense deleted successfully", {
@@ -243,11 +233,9 @@ function App() {
 
   return (
     <div className="app">
-
       {/* Header */}
       <header className="header">
         <div className="header-content">
-
           <div>
             <h1>Expense Tracker</h1>
 
@@ -262,110 +250,73 @@ function App() {
             <div>
               <span>Wallet Balance</span>
 
-              <strong>
-                ₹{walletBalance.toFixed(2)}
-              </strong>
+              <strong>₹{walletBalance.toFixed(2)}</strong>
             </div>
           </div>
-
         </div>
       </header>
 
       <main className="container">
-
         {/* Wallet Card */}
         <section className="top-section">
-
           <div className="wallet-card">
-
             <div className="wallet-icon">
               <FaWallet />
             </div>
 
             <div className="wallet-info">
-
-              <p>Wallet Balance</p>
-
-              <h2>
-                ₹{walletBalance.toFixed(2)}
-              </h2>
+              <h2>Wallet Balance: ₹{walletBalance.toFixed(2)}</h2>
 
               <span>Available balance</span>
-
             </div>
 
             <button
               type="button"
               className="income-button"
-              onClick={() =>
-                setIsBalanceModalOpen(true)
-              }
+              onClick={() => setIsBalanceModalOpen(true)}
             >
               + Add Income
             </button>
-
           </div>
-
         </section>
 
         {/* Charts */}
         <section className="charts-grid">
-
           <div className="card chart-card">
-
             <div className="card-heading">
-
               <div>
                 <h2>Expense Summary</h2>
 
-                <p>
-                  Spending by category
-                </p>
+                <p>Spending by category</p>
               </div>
-
             </div>
 
             <ExpenseSummary expenses={expenses} />
-
           </div>
 
           <div className="card chart-card">
-
             <div className="card-heading">
-
               <div>
                 <h2>Expense Trends</h2>
 
-                <p>
-                  Total spending by category
-                </p>
+                <p>Total spending by category</p>
               </div>
-
             </div>
 
             <ExpenseTrends expenses={expenses} />
-
           </div>
-
         </section>
 
         {/* Expenses */}
         <section className="card expense-card">
-
           <div className="expense-header">
-
             <div>
-
               <h2>Expenses</h2>
 
               <p>
                 Transactions: {expenses.length}{" "}
-                {expenses.length === 1
-                  ? "expense"
-                  : "expenses"}{" "}
-                recorded
+                {expenses.length === 1 ? "expense" : "expenses"} recorded
               </p>
-
             </div>
 
             <button
@@ -378,7 +329,6 @@ function App() {
             >
               + Add Expense
             </button>
-
           </div>
 
           <ExpenseList
@@ -386,17 +336,13 @@ function App() {
             onEdit={handleEditExpense}
             onDelete={handleDeleteExpense}
           />
-
         </section>
-
       </main>
 
       {/* Add Balance Modal */}
       <AddBalanceModal
         isOpen={isBalanceModalOpen}
-        onClose={() =>
-          setIsBalanceModalOpen(false)
-        }
+        onClose={() => setIsBalanceModalOpen(false)}
         onSubmit={handleAddBalance}
       />
 
@@ -404,14 +350,9 @@ function App() {
       <ExpenseModal
         isOpen={isExpenseModalOpen}
         onClose={closeExpenseModal}
-        onSubmit={
-          editingExpense
-            ? handleUpdateExpense
-            : handleAddExpense
-        }
+        onSubmit={editingExpense ? handleUpdateExpense : handleAddExpense}
         editingExpense={editingExpense}
       />
-
     </div>
   );
 }
