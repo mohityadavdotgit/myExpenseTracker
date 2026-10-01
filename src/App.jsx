@@ -14,24 +14,29 @@ import "./App.css";
 function App() {
   const { enqueueSnackbar } = useSnackbar();
 
-  // Wallet starts with 5000 for every new page visit.
+  // Start with 5000 on every page visit
   const [walletBalance, setWalletBalance] = useState(5000);
 
-  // Expenses are persisted in localStorage.
+  // Keep expenses in localStorage
   const [expenses, setExpenses] = useState(() => {
     const savedExpenses = localStorage.getItem("expenses");
+
     return savedExpenses ? JSON.parse(savedExpenses) : [];
   });
 
   const [isBalanceModalOpen, setIsBalanceModalOpen] = useState(false);
   const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
+
   const [editingExpense, setEditingExpense] = useState(null);
 
-  // Save expenses to localStorage.
+  // Save expenses to localStorage
   useEffect(() => {
     localStorage.setItem("expenses", JSON.stringify(expenses));
   }, [expenses]);
 
+  // -----------------------------
+  // Add Income
+  // -----------------------------
   const handleAddBalance = (amount) => {
     const income = Number(amount);
 
@@ -42,7 +47,9 @@ function App() {
       return;
     }
 
-    setWalletBalance((previousBalance) => previousBalance + income);
+    setWalletBalance(
+      (previousBalance) => previousBalance + income
+    );
 
     enqueueSnackbar("Balance added successfully", {
       variant: "success",
@@ -51,53 +58,53 @@ function App() {
     setIsBalanceModalOpen(false);
   };
 
+  // -----------------------------
+  // Add Expense
+  // -----------------------------
   const handleAddExpense = (expenseData) => {
-    const title = expenseData.title.trim();
     const price = Number(expenseData.price);
-    const category = expenseData.category;
-    const date = expenseData.date;
 
-    if (!title) {
-      enqueueSnackbar("Please enter an expense title", {
+    if (!expenseData.title.trim()) {
+      enqueueSnackbar("Please enter expense title", {
         variant: "error",
       });
-      return;
+      return false;
     }
 
     if (!price || price <= 0) {
       enqueueSnackbar("Please enter a valid expense amount", {
         variant: "error",
       });
-      return;
+      return false;
     }
 
-    if (!category) {
+    if (!expenseData.category) {
       enqueueSnackbar("Please select a category", {
         variant: "error",
       });
-      return;
+      return false;
     }
 
-    if (!date) {
+    if (!expenseData.date) {
       enqueueSnackbar("Please select a date", {
         variant: "error",
       });
-      return;
+      return false;
     }
 
     if (price > walletBalance) {
-      enqueueSnackbar("Insufficient wallet balance", {
+      enqueueSnackbar("Expense cannot exceed wallet balance", {
         variant: "error",
       });
-      return;
+      return false;
     }
 
     const newExpense = {
       id: Date.now(),
-      title,
+      title: expenseData.title.trim(),
       price,
-      category,
-      date,
+      category: expenseData.category,
+      date: expenseData.date,
     };
 
     setExpenses((previousExpenses) => [
@@ -113,69 +120,69 @@ function App() {
       variant: "success",
     });
 
-    setIsExpenseModalOpen(false);
+    return true;
   };
 
-  const handleUpdateExpense = (expenseData) => {
-    const title = expenseData.title.trim();
-    const newPrice = Number(expenseData.price);
-    const category = expenseData.category;
-    const date = expenseData.date;
+  // -----------------------------
+  // Update Expense
+  // -----------------------------
+  const handleUpdateExpense = (updatedExpense) => {
+    const newPrice = Number(updatedExpense.price);
+    const oldPrice = Number(editingExpense.price);
 
-    if (!title) {
-      enqueueSnackbar("Please enter an expense title", {
+    if (!updatedExpense.title.trim()) {
+      enqueueSnackbar("Please enter expense title", {
         variant: "error",
       });
-      return;
+      return false;
     }
 
     if (!newPrice || newPrice <= 0) {
       enqueueSnackbar("Please enter a valid expense amount", {
         variant: "error",
       });
-      return;
+      return false;
     }
 
-    if (!category) {
+    if (!updatedExpense.category) {
       enqueueSnackbar("Please select a category", {
         variant: "error",
       });
-      return;
+      return false;
     }
 
-    if (!date) {
+    if (!updatedExpense.date) {
       enqueueSnackbar("Please select a date", {
         variant: "error",
       });
-      return;
+      return false;
     }
 
-    const oldPrice = Number(editingExpense.price);
-    const difference = newPrice - oldPrice;
+    const priceDifference = newPrice - oldPrice;
 
-    if (difference > walletBalance) {
+    if (priceDifference > walletBalance) {
       enqueueSnackbar("Insufficient wallet balance", {
         variant: "error",
       });
-      return;
+      return false;
     }
 
     setExpenses((previousExpenses) =>
       previousExpenses.map((expense) =>
-        expense.id === editingExpense.id
+        expense.id === updatedExpense.id
           ? {
               ...expense,
-              title,
+              title: updatedExpense.title.trim(),
               price: newPrice,
-              category,
-              date,
+              category: updatedExpense.category,
+              date: updatedExpense.date,
             }
           : expense
       )
     );
 
     setWalletBalance(
-      (previousBalance) => previousBalance - difference
+      (previousBalance) => previousBalance - priceDifference
     );
 
     enqueueSnackbar("Expense updated successfully", {
@@ -183,12 +190,16 @@ function App() {
     });
 
     setEditingExpense(null);
-    setIsExpenseModalOpen(false);
+
+    return true;
   };
 
-  const handleDeleteExpense = (expenseId) => {
+  // -----------------------------
+  // Delete Expense
+  // -----------------------------
+  const handleDeleteExpense = (id) => {
     const expenseToDelete = expenses.find(
-      (expense) => expense.id === expenseId
+      (expense) => expense.id === id
     );
 
     if (!expenseToDelete) {
@@ -197,7 +208,7 @@ function App() {
 
     setExpenses((previousExpenses) =>
       previousExpenses.filter(
-        (expense) => expense.id !== expenseId
+        (expense) => expense.id !== id
       )
     );
 
@@ -211,54 +222,137 @@ function App() {
     });
   };
 
+  // -----------------------------
+  // Open Edit Modal
+  // -----------------------------
   const handleEditExpense = (expense) => {
     setEditingExpense(expense);
     setIsExpenseModalOpen(true);
   };
 
-  const handleExpenseSubmit = (expenseData) => {
-    if (editingExpense) {
-      handleUpdateExpense(expenseData);
-    } else {
-      handleAddExpense(expenseData);
-    }
+  // -----------------------------
+  // Close Expense Modal
+  // -----------------------------
+  const closeExpenseModal = () => {
+    setIsExpenseModalOpen(false);
+    setEditingExpense(null);
   };
 
   return (
     <div className="app">
-      <header className="app-header">
-        <h1>Expense Tracker</h1>
 
-        <div className="header-wallet">
-          <MdAccountBalanceWallet />
-          <span>Wallet Balance</span>
-          <strong>₹{walletBalance.toFixed(2)}</strong>
+      {/* Header */}
+      <header className="header">
+        <div className="header-content">
+
+          <div>
+            <h1>Expense Tracker</h1>
+
+            <p className="subtitle">
+              Manage your expenses and track your spending
+            </p>
+          </div>
+
+          <div className="wallet-header">
+            <MdAccountBalanceWallet />
+
+            <div>
+              <span>Wallet Balance</span>
+
+              <strong>
+                ₹{walletBalance.toFixed(2)}
+              </strong>
+            </div>
+          </div>
+
         </div>
       </header>
 
-      <main className="app-container">
-        <section className="wallet-card">
-          <div className="wallet-icon">
-            <FaWallet />
+      <main className="container">
+
+        {/* Wallet Card */}
+        <section className="top-section">
+
+          <div className="wallet-card">
+
+            <div className="wallet-icon">
+              <FaWallet />
+            </div>
+
+            <div className="wallet-info">
+
+              <p>Wallet Balance</p>
+
+              <h2>
+                ₹{walletBalance.toFixed(2)}
+              </h2>
+
+              <span>Available balance</span>
+
+            </div>
+
+            <button
+              type="button"
+              className="income-button"
+              onClick={() =>
+                setIsBalanceModalOpen(true)
+              }
+            >
+              + Add Income
+            </button>
+
           </div>
 
-          <div className="wallet-info">
-            <p>Wallet Balance</p>
-            <h2>₹{walletBalance.toFixed(2)}</h2>
-          </div>
-
-          <button
-            type="button"
-            className="income-button"
-            onClick={() => setIsBalanceModalOpen(true)}
-          >
-            + Add Income
-          </button>
         </section>
 
-        <section className="expense-section">
-          <div className="section-header">
+        {/* Charts */}
+        <section className="charts-grid">
+
+          <div className="card chart-card">
+
+            <div className="card-heading">
+
+              <div>
+                <h2>Expense Summary</h2>
+
+                <p>
+                  Spending by category
+                </p>
+              </div>
+
+            </div>
+
+            <ExpenseSummary expenses={expenses} />
+
+          </div>
+
+          <div className="card chart-card">
+
+            <div className="card-heading">
+
+              <div>
+                <h2>Expense Trends</h2>
+
+                <p>
+                  Total spending by category
+                </p>
+              </div>
+
+            </div>
+
+            <ExpenseTrends expenses={expenses} />
+
+          </div>
+
+        </section>
+
+        {/* Expenses */}
+        <section className="card expense-card">
+
+          <div className="expense-header">
+
             <div>
+
               <h2>Expenses</h2>
 
               <p>
@@ -268,6 +362,7 @@ function App() {
                   : "expenses"}{" "}
                 recorded
               </p>
+
             </div>
 
             <button
@@ -280,6 +375,7 @@ function App() {
             >
               + Add Expense
             </button>
+
           </div>
 
           <ExpenseList
@@ -287,31 +383,32 @@ function App() {
             onEdit={handleEditExpense}
             onDelete={handleDeleteExpense}
           />
+
         </section>
 
-        <section className="dashboard-section">
-          <ExpenseSummary expenses={expenses} />
-          <ExpenseTrends expenses={expenses} />
-        </section>
       </main>
 
-      {isBalanceModalOpen && (
-        <AddBalanceModal
-          onClose={() => setIsBalanceModalOpen(false)}
-          onAddBalance={handleAddBalance}
-        />
-      )}
+      {/* Add Balance Modal */}
+      <AddBalanceModal
+        isOpen={isBalanceModalOpen}
+        onClose={() =>
+          setIsBalanceModalOpen(false)
+        }
+        onSubmit={handleAddBalance}
+      />
 
-      {isExpenseModalOpen && (
-        <ExpenseModal
-          onClose={() => {
-            setIsExpenseModalOpen(false);
-            setEditingExpense(null);
-          }}
-          onSubmit={handleExpenseSubmit}
-          editingExpense={editingExpense}
-        />
-      )}
+      {/* Add/Edit Expense Modal */}
+      <ExpenseModal
+        isOpen={isExpenseModalOpen}
+        onClose={closeExpenseModal}
+        onSubmit={
+          editingExpense
+            ? handleUpdateExpense
+            : handleAddExpense
+        }
+        editingExpense={editingExpense}
+      />
+
     </div>
   );
 }
