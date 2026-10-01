@@ -112,10 +112,7 @@ function App() {
       date: expenseData.date,
     };
 
-    setExpenses((previousExpenses) => [
-      ...previousExpenses,
-      newExpense,
-    ]);
+    setExpenses((previousExpenses) => [...previousExpenses, newExpense]);
 
     setWalletBalance((previousBalance) => previousBalance - price);
 
@@ -194,13 +191,11 @@ function App() {
               category: updatedExpense.category,
               date: updatedExpense.date,
             }
-          : expense
-      )
+          : expense,
+      ),
     );
 
-    setWalletBalance(
-      (previousBalance) => previousBalance - priceDifference
-    );
+    setWalletBalance((previousBalance) => previousBalance - priceDifference);
 
     enqueueSnackbar("Expense updated successfully", {
       variant: "success",
@@ -215,22 +210,19 @@ function App() {
   // Delete Expense
   // -----------------------------
   const handleDeleteExpense = (id) => {
-    const expenseToDelete = expenses.find(
-      (expense) => expense.id === id
-    );
+    const expenseToDelete = expenses.find((expense) => expense.id === id);
 
     if (!expenseToDelete) {
       return;
     }
 
     setExpenses((previousExpenses) =>
-      previousExpenses.filter((expense) => expense.id !== id)
+      previousExpenses.filter((expense) => expense.id !== id),
     );
 
     // Return deleted amount to wallet
     setWalletBalance(
-      (previousBalance) =>
-        previousBalance + Number(expenseToDelete.price)
+      (previousBalance) => previousBalance + Number(expenseToDelete.price),
     );
 
     enqueueSnackbar("Expense deleted successfully", {
@@ -270,16 +262,13 @@ function App() {
             <MdAccountBalanceWallet />
             <div>
               <span>Wallet Balance</span>
-              <strong>
-                ₹{walletBalance.toFixed(2)}
-              </strong>
+              <strong>₹{walletBalance.toFixed(2)}</strong>
             </div>
           </div>
         </div>
       </header>
 
       <main className="container">
-
         {/* Wallet Card */}
         <section className="top-section">
           <div className="wallet-card">
@@ -290,13 +279,9 @@ function App() {
             <div className="wallet-info">
               <p>Wallet Balance</p>
 
-              <h2>
-                ₹{walletBalance.toFixed(2)}
-              </h2>
+              <h2>₹{walletBalance.toFixed(2)}</h2>
 
-              <span>
-                Available balance
-              </span>
+              <span>Available balance</span>
             </div>
 
             <button
@@ -304,15 +289,13 @@ function App() {
               className="income-button"
               onClick={() => setIsBalanceModalOpen(true)}
             >
-              <FaPlus />
-              Add Income
+              + Add Income
             </button>
           </div>
         </section>
 
         {/* Charts */}
         <section className="charts-grid">
-
           <div className="card chart-card">
             <div className="card-heading">
               <div>
@@ -334,21 +317,16 @@ function App() {
 
             <ExpenseTrends expenses={expenses} />
           </div>
-
         </section>
 
         {/* Expense History */}
         <section className="card expense-card">
-
           <div className="expense-header">
             <div>
               <h2>Expense History</h2>
               <p>
                 {expenses.length}{" "}
-                {expenses.length === 1
-                  ? "expense"
-                  : "expenses"}{" "}
-                recorded
+                {expenses.length === 1 ? "expense" : "expenses"} recorded
               </p>
             </div>
 
@@ -360,8 +338,7 @@ function App() {
                 setIsExpenseModalOpen(true);
               }}
             >
-              <FaPlus />
-              Add Expense
+              + Add Expense
             </button>
           </div>
 
@@ -370,7 +347,6 @@ function App() {
             onEdit={handleEditExpense}
             onDelete={handleDeleteExpense}
           />
-
         </section>
       </main>
 
@@ -385,11 +361,7 @@ function App() {
       <ExpenseModal
         isOpen={isExpenseModalOpen}
         onClose={closeExpenseModal}
-        onSubmit={
-          editingExpense
-            ? handleUpdateExpense
-            : handleAddExpense
-        }
+        onSubmit={editingExpense ? handleUpdateExpense : handleAddExpense}
         editingExpense={editingExpense}
       />
     </div>
